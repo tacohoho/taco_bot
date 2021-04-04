@@ -207,8 +207,17 @@ async def on_message(message):
       await message.channel.send(quote)
 
     elif msg.startswith("$role"):
-      role = random_role()
-      await message.channel.send(role)
+      global roles
+      commands = msg.split()
+      role = ""
+      if len(commands) == 1:
+        role = random_role()
+        await message.channel.send(role)
+      else:
+        for i in range(int(commands[1])):
+          role = role + random_role() + " "
+        await message.channel.send(role)
+      roles = ["ADC", "TOP", "MID", "SUP", "JG"]
     
     elif msg.startswith("$animequiz"):
       commands = msg.split()
@@ -253,7 +262,7 @@ async def on_message(message):
       commands = msg.split()
       if len(commands) == 1:
         await message.channel.send("**$quote** is for some zen quotes\n" 
-        "**$role** is for random league roles so we don't have to pick some random shit last second\n"
+        "**$role** is for random league roles so we don't have to pick some random shit last second. You can also add a number at the end for a certain amount of roles\n"
         "**$champ** gives a random champion from League of Legends. You can also add a role at the end to get a champion from that specific role\n"
         "**$animequiz** is where you give an anime and given a random quote from that anime. Try and guess who said it!\n"
         "**$game?** Chooses between League of Legends and Valorant\n"
